@@ -1,2 +1,2 @@
-# harold-project0
-store app, menu to order, track data, classes for each object (customer, product, ...)
+# haroldo-project1
+Extending harold-project0 to web
