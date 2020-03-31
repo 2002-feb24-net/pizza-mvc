@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Restaurant.DataAccess.Models;
 using Restaurant.Interface;
+using Restaurant.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Restaurant.DataAccess
         public void SaveInventory(IDataInventory inventory, IDataProduct product, IDataStore store)
         {
             using DbRestaurantContext context = new DbRestaurantContext();
-            var I_Inventory = new Inventorys();
+            var I_Inventory = new Inventory();
             // add BusinessLogic Inventory to DbInventory
             I_Inventory.ProductId = product.ProductId;
             I_Inventory.StoreId = store.StoreId;
@@ -25,12 +26,12 @@ namespace Restaurant.DataAccess
             context.SaveChanges();
         }
 
-        public List<Inventorys> LoadInventorys()
+       /* public List<Inventorys> LoadInventorys()
         {
             using DbRestaurantContext context = new DbRestaurantContext();
             return context.Inventorys.ToList();
 
-        }
+        }*/
 
 
     }

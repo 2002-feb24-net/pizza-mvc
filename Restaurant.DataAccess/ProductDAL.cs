@@ -41,10 +41,11 @@ namespace Restaurant.DataAccess
 
             var storeId = store.StoreId;
 
-            var productIDsInStock = from inventorys in context.Inventorys
+            /*var productIDsInStock = from inventorys in context.Inventorys
                                   where inventorys.StoreId == storeId
-                                  select inventorys.ProductId;
-            
+                                  select inventorys.ProductId;*/
+
+            IEnumerable<int> productIDsInStock = null;
             return new List<int>(productIDsInStock);
             
 
@@ -61,10 +62,11 @@ namespace Restaurant.DataAccess
 
             var storeId = store.StoreId;
 
-            var productIDsInStock = from inventorys in context.Inventorys
+            /*var productIDsInStock = from inventorys in context.Inventorys
                                     where inventorys.StoreId == storeId
-                                    select inventorys.ProductId;
+                                    select inventorys.ProductId;*/
 
+            IEnumerable<int> productIDsInStock = null;
             return new List<int>(productIDsInStock);
 
 
