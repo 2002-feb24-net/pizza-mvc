@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Restaurant.DataAccess.Models
+namespace Restaurant.DataAccess.Model
 {
     public partial class Stores
     {
         public Stores()
         {
-/*            Inventorys = new HashSet<Inventorys>();
-*/            Orders = new HashSet<Orders>();
+            Inventorys = new HashSet<Inventorys>();
+            Orders = new HashSet<Orders>();
         }
 
         public int StoreId { get; set; }
@@ -18,7 +18,7 @@ namespace Restaurant.DataAccess.Models
         public string State { get; set; }
         public string Zipcode { get; set; }
 
-/*        public virtual ICollection<Inventorys> Inventorys { get; set; }
-*/        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Inventorys> Inventorys { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 using Restaurant.DataAccess;
-using Restaurant.DataAccess.Models;
+using Restaurant.DataAccess.Model;
 using Restaurant.Library;
 using System;
 

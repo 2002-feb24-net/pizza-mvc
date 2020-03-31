@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ClientMVC.ViewModels
 {
-    public partial class InventorysViewModel
+    /*public partial class InventorysViewModel
     {
         public int InventoryId { get; set; }
         public int? Quantity { get; set; }
@@ -12,5 +12,5 @@ namespace ClientMVC.ViewModels
 
         public virtual ProductsViewModel Product { get; set; }
         public virtual StoresViewModel Store { get; set; }
-    }
+    }*/
 }

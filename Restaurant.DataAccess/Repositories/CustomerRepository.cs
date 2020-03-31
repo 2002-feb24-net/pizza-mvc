@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Restaurant.DataAccess.Models;
+using Restaurant.DataAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

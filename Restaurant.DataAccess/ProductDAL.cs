@@ -1,16 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Restaurant.DataAccess.Models;
-using Restaurant.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Restaurant.DataAccess
+﻿namespace Restaurant.DataAccess
 {
     public class ProductDAL
         //customer data access library
     {
-        public void SaveProduct(IDataProduct product)
+        /*public void SaveProduct(IDataProduct product)
         {
             using DbRestaurantContext context = new DbRestaurantContext();
             var P_Products = new Products();
@@ -41,9 +34,9 @@ namespace Restaurant.DataAccess
 
             var storeId = store.StoreId;
 
-            /*var productIDsInStock = from inventorys in context.Inventorys
+            *//*var productIDsInStock = from inventorys in context.Inventorys
                                   where inventorys.StoreId == storeId
-                                  select inventorys.ProductId;*/
+                                  select inventorys.ProductId;*//*
 
             IEnumerable<int> productIDsInStock = null;
             return new List<int>(productIDsInStock);
@@ -62,9 +55,9 @@ namespace Restaurant.DataAccess
 
             var storeId = store.StoreId;
 
-            /*var productIDsInStock = from inventorys in context.Inventorys
+            *//*var productIDsInStock = from inventorys in context.Inventorys
                                     where inventorys.StoreId == storeId
-                                    select inventorys.ProductId;*/
+                                    select inventorys.ProductId;*//*
 
             IEnumerable<int> productIDsInStock = null;
             return new List<int>(productIDsInStock);
@@ -72,7 +65,7 @@ namespace Restaurant.DataAccess
 
         }
 
-        /* public List<string> LoadProductNamesFromStoreInStock(IDataStore store)
+        *//* public List<string> LoadProductNamesFromStoreInStock(IDataStore store)
          {
              using DbRestaurantContext context = new DbRestaurantContext();
 
@@ -100,7 +93,7 @@ namespace Restaurant.DataAccess
         /* throw new NotImplementedException();
 
 
-     }*/
+     }*//*
 
         public Products LoadProductByID(int productID)
         {
@@ -111,6 +104,6 @@ namespace Restaurant.DataAccess
                                  select product;
 
             return productMatched.First();
-        }
+        }*/
     }
 }

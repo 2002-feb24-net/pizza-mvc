@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Restaurant.DataAccess.Models;
-using Restaurant.Interface;
-using System;
+﻿using Restaurant.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +6,7 @@ namespace Restaurant.DataAccess
 {
     public class CustomerDAL
         //customer data access library
-    {
+    {/*
         public void SaveCustomer(ICustomer customer)
         {
             using DbRestaurantContext context = new DbRestaurantContext();
@@ -62,6 +59,6 @@ namespace Restaurant.DataAccess
                            select customer.CustomerId;
             var customerID = customerIDList.FirstOrDefault(); // unique combination so can return single, no duplicates possible from db
             return customerID;
-        }
+        }*/
     }
 }

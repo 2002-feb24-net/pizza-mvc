@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Restaurant.DataAccess.Models
+namespace Restaurant.DataAccess.Model
 {
     public partial class DbRestaurantContext : DbContext
     {
@@ -16,8 +16,8 @@ namespace Restaurant.DataAccess.Models
         }
 
         public virtual DbSet<Customers> Customers { get; set; }
-/*        public virtual DbSet<Inventorys> Inventorys { get; set; }
-*/        public virtual DbSet<Orderlines> Orderlines { get; set; }
+        public virtual DbSet<Inventorys> Inventorys { get; set; }
+        public virtual DbSet<Orderlines> Orderlines { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Stores> Stores { get; set; }
@@ -62,8 +62,8 @@ namespace Restaurant.DataAccess.Models
                     .IsUnicode(false);
             });
 
-/*            modelBuilder.Entity<Inventorys>(entity =>
-*/           /* {
+            modelBuilder.Entity<Inventorys>(entity =>
+            {
                 entity.HasKey(e => e.InventoryId);
 
                 entity.HasIndex(e => new { e.ProductId, e.StoreId })
@@ -87,7 +87,7 @@ namespace Restaurant.DataAccess.Models
                     .HasForeignKey(d => d.StoreId)
                     .HasConstraintName("FK_STORES_STOREID");
             });
-*/
+
             modelBuilder.Entity<Orderlines>(entity =>
             {
                 entity.HasKey(e => e.OrderlineId)

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Restaurant.DataAccess.Models
+namespace ClientMVC.ViewModels
 {
-    public partial class Customers
+    public partial class CustomersViewModel
     {
-        public Customers()
+        public CustomersViewModel()
         {
-            Orders = new HashSet<Orders>();
+            Orders = new HashSet<OrdersViewModel>();
         }
 
         public int CustomerId { get; set; }
@@ -15,6 +15,6 @@ namespace Restaurant.DataAccess.Models
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<OrdersViewModel> Orders { get; set; }
     }
 }

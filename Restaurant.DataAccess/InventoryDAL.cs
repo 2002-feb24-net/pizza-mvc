@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Restaurant.DataAccess.Models;
+using Restaurant.DataAccess.Model;
 using Restaurant.Interface;
 using Restaurant.Library;
 using System;
@@ -10,7 +10,7 @@ namespace Restaurant.DataAccess
 {
     public class InventoryDAL
         //customer data access library
-    {
+    {/*
         public void SaveInventory(IDataInventory inventory, IDataProduct product, IDataStore store)
         {
             using DbRestaurantContext context = new DbRestaurantContext();
@@ -26,7 +26,7 @@ namespace Restaurant.DataAccess
             context.SaveChanges();
         }
 
-       /* public List<Inventorys> LoadInventorys()
+       *//* public List<Inventorys> LoadInventorys()
         {
             using DbRestaurantContext context = new DbRestaurantContext();
             return context.Inventorys.ToList();
