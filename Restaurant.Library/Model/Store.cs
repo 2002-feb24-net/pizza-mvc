@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Restaurant.Library
+namespace Restaurant.Domain.Model
 {
     public class Store : IDataStore
     {
@@ -14,14 +14,26 @@ namespace Restaurant.Library
         public string Zipcode { get; set; }
         public string StoreName { get; set; }
 
-        List<Product> ProductsSold { get; set; }
+
+
+        public List<Product> ProductsSold { get; set; }
         // to avoid someone trying to order burgers from Pizza restaurant
         // need only check Product.Name for verification, but added whole product class to allow different operations
         // for example: can list all products of x price
 
-            // Quantity of Inventory for each product
-        Dictionary<Product,int> ProductAndInventory { 
-            get { return ProductAndInventory; }
+        // Quantity of Inventory for each product
+
+        public List<Customer> PastCustomers { get; set; }
+        // customers who have bought something at this store before
+
+        public List<Order> PastOrders { get; set; }
+
+        private Dictionary<Product, int> _ProductAndInventory;
+        public Dictionary<Product,int> ProductAndInventory {
+            get
+            {
+                return _ProductAndInventory;
+            }
             set 
             {
                 // verify items cost at least 0
@@ -33,6 +45,8 @@ namespace Restaurant.Library
                     {
                         throw new ArgumentOutOfRangeException($"Cannot have negative inventory for product: {item.Key}");
                     }
+                    else
+                        _ProductAndInventory.Add(item.Key, item.Value);
 
 
                 }

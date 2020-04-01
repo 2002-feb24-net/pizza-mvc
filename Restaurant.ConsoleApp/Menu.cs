@@ -1,6 +1,6 @@
 using Restaurant.DataAccess;
 using Restaurant.DataAccess.Model;
-using Restaurant.Library;
+using Restaurant.Domain.Model;
 using System;
 
 namespace Restaurant.ConsoleApp

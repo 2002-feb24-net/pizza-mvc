@@ -1,53 +1,59 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurant.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Restaurant.DataAccess
+namespace Restaurant.DataAccess.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext Context;
+        protected readonly DbContext _context;
 
         public Repository(DbContext context)
         {
-            Context = context;
+            _context = context;
         }
         public void Add(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
+            _context.Set<TEntity>().Add(entity);
        }
 
         public void AddRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().AddRange(entities);
+            _context.Set<TEntity>().AddRange(entities);
         }
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().Where(predicate);
+            return _context.Set<TEntity>().Where(predicate);
         }
 
         public TEntity Get(int id)
         {
-            return Context.Set<TEntity>().Find(id); //return single object of class
+            return _context.Set<TEntity>().Find(id); //return single object of class
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return Context.Set<TEntity>().ToList();
+            return _context.Set<TEntity>().ToList();
         }
 
         public void Remove(TEntity entity)
         {
-            Context.Set<TEntity>().Remove(entity);
+            _context.Set<TEntity>().Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().RemoveRange(entities);
+            _context.Set<TEntity>().RemoveRange(entities);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
     }
 }

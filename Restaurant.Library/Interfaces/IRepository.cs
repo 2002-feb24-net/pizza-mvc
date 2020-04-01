@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Restaurant.DataAccess
+namespace Restaurant.Domain.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class // generic
     {

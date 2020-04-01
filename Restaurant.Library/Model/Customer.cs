@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Restaurant.Interface;
 
-namespace Restaurant.Library
+namespace Restaurant.Domain.Model
 {
     public class Customer : User, ICustomer
     {
@@ -18,12 +18,11 @@ namespace Restaurant.Library
 
         public int CustomerId { get; set; }
 
-        public Customer( string fullname, string uniqueUsername, string password)
+        public Customer( string fullname)
             // registers a customer, can load data from existing customer in db
         {
             FullName = fullname;
-            Username = uniqueUsername;
-            Password = password;
+           
             /*Username = uniqueUsername;
             Password = password;*/
 

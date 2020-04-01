@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Restaurant.DataAccess
+namespace Restaurant.Domain.Interfaces
 {
     interface IUnitOfWork : IDisposable
     {

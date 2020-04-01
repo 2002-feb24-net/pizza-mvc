@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Restaurant.DataAccess
+namespace Restaurant.DataAccess.Repositories
 {
     public class CustomerRepository : Repository<Customers>
     {

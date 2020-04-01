@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Restaurant.Library
+namespace Restaurant.Domain.Model
 {
     public class Inventory : IDataInventory
     {

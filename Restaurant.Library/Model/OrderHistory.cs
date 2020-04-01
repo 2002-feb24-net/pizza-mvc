@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Restaurant.Library
+namespace Restaurant.Domain.Model
 {
     /*can implement this collection better in an interface
      * class OrderHistory

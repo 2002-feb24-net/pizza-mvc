@@ -2,7 +2,7 @@ using Restaurant.Interface;
 using System;
 using System.Collections.Generic;
 
-namespace Restaurant.Library
+namespace Restaurant.Domain.Model
 {
     public class Product : IDataProduct
     {

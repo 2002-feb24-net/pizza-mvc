@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Restaurant.Interface;
 
-namespace Restaurant.Library
+namespace Restaurant.Domain.Model
 {
     public class Order : IOrder, IDataOrder
     {
@@ -24,7 +24,7 @@ namespace Restaurant.Library
 
             set;
         }
-        public Order(Product productAndPrice, User userPlacingOrder)
+        public Order( User userPlacingOrder)
             // this only constructs an order with one product and price in it, but need a method to add additional products to order
             // ensures there are no empty orders (bc that is nonsensical)
         {
@@ -45,7 +45,6 @@ namespace Restaurant.Library
 
             foreach (var product in AllProductsOnOrder)
                 Total += product.Cost;*/
-            Total = productAndPrice.Cost;
         }
 
         public void AddToOrder(Product productAndPrice)
