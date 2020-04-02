@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Restaurant.DataAccess.Model;
 using Restaurant.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,11 +10,14 @@ using System.Text;
 
 namespace Restaurant.DataAccess.Repositories
 {
+    
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext _context;
+        protected readonly DbRestaurantContext _context;
 
-        public Repository(DbContext context)
+        protected readonly ILogger<TEntity> _logger;
+
+        public Repository(DbRestaurantContext context)
         {
             _context = context;
         }
@@ -31,10 +36,11 @@ namespace Restaurant.DataAccess.Repositories
             return _context.Set<TEntity>().Where(predicate);
         }
 
-        public TEntity Get(int id)
+        public TEntity Get(int id, params Expression<Func<TEntity, object>>[] includes)
         {
-            return _context.Set<TEntity>().Find(id); //return single object of class
-        }
+            var dbSet = _context.Set<TEntity>().Include.Find(id); //return single object of class
+            IEnumerable<TEntity> query = null;
+                    
 
         public IEnumerable<TEntity> GetAll()
         {

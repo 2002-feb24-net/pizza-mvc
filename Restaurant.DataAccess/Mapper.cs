@@ -35,7 +35,7 @@ namespace Restaurant.DataAccess
             // constructor requires a string name and a price
 
         }
-        internal static Domain.Model.Customer MapCustomerWithLoginDetails(DataAccess.Model.Customers data_customers)
+        public static Domain.Model.Customer MapCustomerWithLoginDetails(DataAccess.Model.Customers data_customers)
         {
             return new Domain.Model.Customer(data_customers.FullName)
             {
@@ -44,7 +44,7 @@ namespace Restaurant.DataAccess
             };
         }
 
-        internal static Domain.Model.Customer MapCustomer(DataAccess.Model.Customers data_customers)
+        public static Domain.Model.Customer MapCustomer(DataAccess.Model.Customers data_customers)
         {
             return new Domain.Model.Customer(data_customers.FullName);
         }
