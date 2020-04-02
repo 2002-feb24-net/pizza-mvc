@@ -21,3 +21,7 @@ steps:
 - script: |
     dotnet build
   displayName: 'dotnet build'
+
+- script: |
+    dotnet test
+  displayName: 'dotnet test'
