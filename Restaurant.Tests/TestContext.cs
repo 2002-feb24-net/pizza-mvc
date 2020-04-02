@@ -17,5 +17,8 @@ namespace Restaurant.Tests
 
             Console.WriteLine("ID " + customer.CustomerId + " Name " + customer.FullName);
         }
+
+
+
     }
 }

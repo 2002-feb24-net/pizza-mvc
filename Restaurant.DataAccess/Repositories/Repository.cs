@@ -26,6 +26,21 @@ namespace Restaurant.DataAccess.Repositories
             _context.Set<TEntity>().AddRange(entities);
         }
 
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, string includeName) // only include one navigational property
+        {
+            return _context.Set<TEntity>().Where(predicate).Include($"{includeName}");
+        }
+
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, string includeNameFirst, string includeNameSecond) //  include two navigational properties
+        {
+            return _context.Set<TEntity>().Where(predicate).Include($"{includeNameFirst}").Include($"{includeNameSecond}");
+        }
+
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, string includeNameFirst, string includeNameSecond, string includeNameThird) //  include three navigational properties
+        {
+            return _context.Set<TEntity>().Where(predicate).Include($"{includeNameFirst}").Include($"{includeNameSecond}").Include($"{includeNameThird}");
+        }
+
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _context.Set<TEntity>().Where(predicate);
@@ -35,6 +50,7 @@ namespace Restaurant.DataAccess.Repositories
         {
             return _context.Set<TEntity>().Find(id); //return single object of class
         }
+
 
         public IEnumerable<TEntity> GetAll()
         {
