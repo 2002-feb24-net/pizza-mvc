@@ -17,3 +17,6 @@ steps:
     echo 'Showing directory contents'
     ls
   displayName: 'Show directory contents'
+
+- script: |
+    dotnet build
