@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace Restaurant.DataAccess.Model
 {
@@ -13,6 +15,21 @@ namespace Restaurant.DataAccess.Model
         public DbRestaurantContext(DbContextOptions<DbRestaurantContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var config = new ConfigurationBuilder()
+                                  .SetBasePath(Directory.GetCurrentDirectory())
+                                  .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            config.AddUserSecrets<DbRestaurantContext>();
+            var Configuration = config.Build();
+            string conn = Configuration["ConnectionStrings:DbRestaurantContext"];
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(conn);
+            }
         }
 
         public virtual DbSet<Customers> Customers { get; set; }
