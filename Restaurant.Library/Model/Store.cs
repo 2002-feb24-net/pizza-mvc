@@ -15,20 +15,26 @@ namespace Restaurant.Domain.Model
         public string StoreName { get; set; }
 
 
+        public Store()
+        {
 
-        public List<Product> ProductsSold { get; set; }
+        }
+
+
+
+        public List<Product> ProductsSold { get; set; } = new List<Product>();
         // to avoid someone trying to order burgers from Pizza restaurant
         // need only check Product.Name for verification, but added whole product class to allow different operations
         // for example: can list all products of x price
 
         // Quantity of Inventory for each product
 
-        public List<Customer> PastCustomers { get; set; }
+        public List<Customer> PastCustomers { get; set; } = new List<Customer>();
         // customers who have bought something at this store before
 
-        public List<Order> PastOrders { get; set; }
+        public List<Order> PastOrders { get; set; } = new List<Order>();
 
-        private Dictionary<Product, int> _ProductAndInventory;
+        private Dictionary<Product, int> _ProductAndInventory = new Dictionary<Product, int>();
         public Dictionary<Product,int> ProductAndInventory {
             get
             {
@@ -50,7 +56,7 @@ namespace Restaurant.Domain.Model
 
 
                 }
-            }
+            } 
         }
 
 

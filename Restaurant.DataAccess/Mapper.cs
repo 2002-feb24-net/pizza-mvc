@@ -86,11 +86,13 @@ namespace Restaurant.DataAccess
                 StoreId = data_stores.StoreId
 
             };
-            //get inventory matching storeid
-            var data_storeInv = data_stores.Inventorys.FirstOrDefault();
 
             //add inventory for each item sold
-            tempStore.ProductAndInventory.Add(MapProduct(data_storeInv.Product), Convert.ToInt32(data_storeInv.Quantity));
+
+            foreach (var inventory in data_stores.Inventorys)
+            {
+                tempStore.ProductAndInventory.Add(MapProduct(inventory.Product), Convert.ToInt32(inventory.Quantity));
+            }
 
             //add past customers (customers who have place orders at this store before)
             foreach (var order in data_stores.Orders)

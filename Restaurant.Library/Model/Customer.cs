@@ -28,7 +28,7 @@ namespace Restaurant.Domain.Model
 
         }
 
-        static string SearchCustomerByName (string cname)
+        public string SearchCustomerByName (string cname)
         {
             //connect to database get loaded list
             throw new NotImplementedException();

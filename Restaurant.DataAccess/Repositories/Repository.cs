@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Restaurant.DataAccess.Model;
 using Restaurant.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,11 +12,12 @@ namespace Restaurant.DataAccess.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext _context;
-
-        public Repository(DbContext context)
+        protected readonly DbContext _context = new DbRestaurantContext();
+/*        protected readonly ILogger<Repository> _logger;
+*/
+        public Repository()
         {
-            _context = context;
+            _context = new DbRestaurantContext();
         }
         public void Add(TEntity entity)
         {

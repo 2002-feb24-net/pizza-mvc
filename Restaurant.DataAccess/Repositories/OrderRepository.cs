@@ -8,7 +8,7 @@ namespace Restaurant.DataAccess.Repositories
 {
     public class OrderRepository : Repository<Orders>
     {
-        public OrderRepository(DbContext context) : base(context)
+        public OrderRepository()
         {
         }
 

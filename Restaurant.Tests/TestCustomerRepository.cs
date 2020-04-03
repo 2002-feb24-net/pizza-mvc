@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Restaurant.Tests
 {
-    public class TestCustomerRepository
+    public class TestStoreRepositoryA
     {
        /* [Fact]
         public void QueryCustomersFindById()

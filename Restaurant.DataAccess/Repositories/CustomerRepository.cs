@@ -9,7 +9,7 @@ namespace Restaurant.DataAccess.Repositories
 {
     public class CustomerRepository : Repository<Customers>
     {
-        public CustomerRepository(DbContext context) : base(context)
+        public CustomerRepository()
         {
         }
 
