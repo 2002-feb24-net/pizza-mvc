@@ -36,3 +36,13 @@ steps:
   # have the build running agent running steps publish test build logs
 
 
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+
+
+
+
+
