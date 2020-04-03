@@ -46,3 +46,12 @@ steps:
 
 
 
+
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(1221fe95-8e35-45f8-ae94-5e2cf04ba808)'
+    appType: 'webApp'
+    WebAppName: 'Restaurant-Haroldo'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
