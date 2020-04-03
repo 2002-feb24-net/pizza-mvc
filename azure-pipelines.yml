@@ -24,7 +24,10 @@ steps:
     organization: '2002-feb24-net'
     scannerMode: 'MSBuild'
     projectKey: '2002-feb24-net_haroldo-project1'
-    projectName: 'haroldo-project1'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner, 
+      # Put one key=value per line, example:
+       sonar.exclusions=**/lib/**
 
 
 - script: |
