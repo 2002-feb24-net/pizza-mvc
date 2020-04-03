@@ -22,14 +22,16 @@ steps:
     dotnet build
   displayName: 'dotnet build'
 
-- script: |
-    dotnet test --logger trx
+
+- script: dotnet test --logger trx
+  displayName: dotnet test
+
+# the default "condition" for every step is "succeeded()" - run this step if the previous step succeeded
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
-  displayName: 'dotnet test'
 
   # have the build running agent running steps publish test build logs
 
