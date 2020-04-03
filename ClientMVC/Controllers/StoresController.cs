@@ -50,23 +50,25 @@ namespace ClientMVC.Controllers
             return View();
         }
 
-      /*  // POST: Stores/Create
+        // POST: Stores/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StoreId,StoreName,StreetAddress,City,State,Zipcode")] Stores stores)
+        public IActionResult Create([Bind("StoreId,StoreName,StreetAddress,City,State,Zipcode")] Restaurant.Domain.Model.Store store)
         {
-            if (ModelState.IsValid)
+            var storeRepo = new StoreRepository();
+
+            /*if (ModelState.IsValid)
             {
-                _context.Add(stores);
+                storeRepo.Add(MapStoreWithInventory(store));
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(stores);
+            }*/
+            return View(store);
         }
 
-        // GET: Stores/Edit/5
+        /*// GET: Stores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

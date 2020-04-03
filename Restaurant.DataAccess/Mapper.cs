@@ -73,6 +73,38 @@ namespace Restaurant.DataAccess
 
         }
 
+        public static DataAccess.Model.Stores  MapStoreWithInventory(Domain.Model.Store domain_store)
+        {
+            /*var MapOrderWithDetails(data_stores.Orders);*/
+            var tempStore = new DataAccess.Model.Stores
+            {
+                StoreName = domain_store.StoreName,
+                StreetAddress = domain_store.StreetAddress,
+                City = domain_store.City,
+                State = domain_store.State,
+                Zipcode = domain_store.Zipcode,
+                StoreId = domain_store.StoreId
+
+            };
+            //add inventory for each item sold
+
+            /*foreach (var item in domain_store.ProductAndInventory)
+            {
+                var tempInventory = new DataAccess.Model.Inventorys
+                {
+                    Quantity = item.Value,
+                };
+
+                tempStore.Inventorys.Add()
+            }
+
+
+            tempStore.ProductAndInventory.Add(MapProduct(data_storeInv.Product), Convert.ToInt32(data_storeInv.Quantity));*/
+
+            return tempStore; // initialized domain model store
+
+        }
+
         public static Domain.Model.Store MapStoreWithDetails(DataAccess.Model.Stores data_stores)
         {
             /*var MapOrderWithDetails(data_stores.Orders);*/
