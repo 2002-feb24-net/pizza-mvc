@@ -26,22 +26,22 @@ namespace ClientMVC.Controllers
             return View(storeRepo.GetAllDomainStores());
         }
 
-        /*// GET: Stores/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Stores/Details/5
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var stores = await _context.Stores
-                .FirstOrDefaultAsync(m => m.StoreId == id);
-            if (stores == null)
+            var storeRepo = new StoreRepository();
+            var store = storeRepo.GetDomainStore(Convert.ToInt32(id));
+            if (store == null)
             {
                 return NotFound();
             }
 
-            return View(stores);
+            return View(store);
         }
 
         // GET: Stores/Create
@@ -50,7 +50,7 @@ namespace ClientMVC.Controllers
             return View();
         }
 
-        // POST: Stores/Create
+      /*  // POST: Stores/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
