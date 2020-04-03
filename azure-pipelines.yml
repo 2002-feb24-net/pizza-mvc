@@ -18,6 +18,15 @@ steps:
     ls
   displayName: 'Show directory contents'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'sonarCloud-haroldoa'
+    organization: '2002-feb24-net'
+    scannerMode: 'MSBuild'
+    projectKey: '2002-feb24-net_haroldo-project1'
+    projectName: 'haroldo-project1'
+
+
 - script: |
     dotnet build
   displayName: 'dotnet build'
@@ -44,7 +53,11 @@ steps:
 
 
 
+- task: SonarCloudAnalyze@1
 
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 
 
 
