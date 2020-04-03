@@ -23,5 +23,14 @@ steps:
   displayName: 'dotnet build'
 
 - script: |
-    dotnet test
+    dotnet test --logger trx
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
   displayName: 'dotnet test'
+
+  # have the build running agent running steps publish test build logs
+
+
