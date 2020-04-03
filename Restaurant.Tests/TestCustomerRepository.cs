@@ -1,5 +1,4 @@
-﻿using Restaurant.DataAccess.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Restaurant.DataAccess.Repositories;
@@ -10,7 +9,7 @@ namespace Restaurant.Tests
 {
     public class TestCustomerRepository
     {
-        [Fact]
+       /* [Fact]
         public void QueryCustomersFindById()
         {
             var context = new DbRestaurantContext();
@@ -22,6 +21,6 @@ namespace Restaurant.Tests
 
             Console.WriteLine("ID " + customer.CustomerId + " Name " + customer.FullName);
             Console.WriteLine("Order: " + customer.Orders.ToString());
-        }
+        }*/
     }
 }

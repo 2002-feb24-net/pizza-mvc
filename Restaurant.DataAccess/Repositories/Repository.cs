@@ -51,6 +51,8 @@ namespace Restaurant.DataAccess.Repositories
             return _context.Set<TEntity>().Find(id); //return single object of class
         }
 
+        
+
 
         public IEnumerable<TEntity> GetAll()
         {
