@@ -35,6 +35,21 @@ namespace Restaurant.DataAccess
             // constructor requires a string name and a price
 
         }
+
+        public static Domain.Model.Inventory MapInventory(DataAccess.Model.Inventorys data_inventory)
+        {
+            return new Domain.Model.Inventory()
+            {
+                InventoryId = data_inventory.InventoryId,
+                ProductId = data_inventory.Product.ProductId,
+                Product = MapProduct(data_inventory.Product),
+                Quantity = data_inventory.Quantity,
+                StoreId = data_inventory.StoreId
+                
+            };
+
+        }
+
         internal static Domain.Model.Customer MapCustomerWithLoginDetails(DataAccess.Model.Customers data_customers)
         {
             return new Domain.Model.Customer(data_customers.FullName)
@@ -65,7 +80,7 @@ namespace Restaurant.DataAccess
             };
             //get inventory matching storeid
              var data_storeInv = data_stores.Inventorys.FirstOrDefault();
-
+            
 
             tempStore.ProductAndInventory.Add(MapProduct(data_storeInv.Product), Convert.ToInt32(data_storeInv.Quantity));
 
