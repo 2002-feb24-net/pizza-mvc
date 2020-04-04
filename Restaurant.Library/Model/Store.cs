@@ -34,8 +34,8 @@ namespace Restaurant.Domain.Model
 
         public List<Order> PastOrders { get; set; } = new List<Order>();
 
-        private Dictionary<Product, int> _ProductAndInventory = new Dictionary<Product, int>();
-        public Dictionary<Product,int> ProductAndInventory {
+        private Dictionary<Product, Inventory> _ProductAndInventory = new Dictionary<Product, Inventory>();
+        public Dictionary<Product,Inventory> ProductAndInventory {
             get
             {
                 return _ProductAndInventory;
@@ -47,7 +47,7 @@ namespace Restaurant.Domain.Model
 
                 foreach (var item in value)
                 {
-                    if (item.Value < 0)
+                    if (item.Value.Quantity < 0)
                     {
                         throw new ArgumentOutOfRangeException($"Cannot have negative inventory for product: {item.Key}");
                     }

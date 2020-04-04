@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Restaurant.DataAccess;
 using Restaurant.DataAccess.Model;
 using Restaurant.DataAccess.Repositories;
 
@@ -12,12 +13,7 @@ namespace ClientMVC.Controllers
 {
     public class StoresController : Controller
     {
-        /*private readonly DbRestaurantContext _context;
-
-        public StoresController(DbRestaurantContext context)
-        {
-            _context = context;
-        }*/
+        
 
         // GET: Stores
         public IActionResult Index()
@@ -59,12 +55,13 @@ namespace ClientMVC.Controllers
         {
             var storeRepo = new StoreRepository();
 
-            /*if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                storeRepo.Add(MapStoreWithInventory(store));
-                await _context.SaveChangesAsync();
+                var data_store = Mapper.MapStoreWithInventory(store);
+                storeRepo.Add((data_store));
+                storeRepo.Save();
                 return RedirectToAction(nameof(Index));
-            }*/
+            }
             return View(store);
         }
 

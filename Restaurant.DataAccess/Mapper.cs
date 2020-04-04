@@ -36,6 +36,18 @@ namespace Restaurant.DataAccess
 
         }
 
+        public static DataAccess.Model.Products MapProduct(Domain.Model.Product data_products)
+        {
+            return new DataAccess.Model.Products()
+            {
+                ProductId = data_products.ProductId,
+                ProductName = data_products.ProductName,
+                Cost = data_products.Cost
+            };
+            // constructor requires a string name and a price
+
+        }
+
         public static Domain.Model.Inventory MapInventory(DataAccess.Model.Inventorys data_inventory)
         {
             return new Domain.Model.Inventory()
@@ -46,6 +58,20 @@ namespace Restaurant.DataAccess
                 Quantity = data_inventory.Quantity,
                 StoreId = data_inventory.StoreId
                 
+            };
+
+        }
+
+        public static DataAccess.Model.Inventorys MapInventory(Domain.Model.Inventory domain_inventory)
+        {
+            return new DataAccess.Model.Inventorys()
+            {
+                InventoryId = domain_inventory.InventoryId,
+                ProductId = domain_inventory.Product.ProductId,
+                Product = MapProduct(domain_inventory.Product),
+                Quantity = domain_inventory.Quantity,
+                StoreId = domain_inventory.StoreId
+
             };
 
         }
@@ -78,11 +104,13 @@ namespace Restaurant.DataAccess
                 StoreId = data_stores.StoreId
             
             };
-            //get inventory matching storeid
-             var data_storeInv = data_stores.Inventorys.FirstOrDefault();
             
 
-            tempStore.ProductAndInventory.Add(MapProduct(data_storeInv.Product), Convert.ToInt32(data_storeInv.Quantity));
+            foreach (var inventory in data_stores.Inventorys)
+            {
+                tempStore.ProductAndInventory.Add(MapProduct(inventory.Product), MapInventory(inventory));
+
+            }
 
             return tempStore; // initialized domain model store
 
@@ -103,18 +131,16 @@ namespace Restaurant.DataAccess
             };
             //add inventory for each item sold
 
-            /*foreach (var item in domain_store.ProductAndInventory)
+            foreach (var item in domain_store.ProductAndInventory)
             {
-                var tempInventory = new DataAccess.Model.Inventorys
-                {
-                    Quantity = item.Value,
-                };
+                var tempInventory = Mapper.MapInventory(item.Value);
 
-                tempStore.Inventorys.Add()
+
+                tempStore.Inventorys.Add(tempInventory);
+                // product data lost?
             }
 
 
-            tempStore.ProductAndInventory.Add(MapProduct(data_storeInv.Product), Convert.ToInt32(data_storeInv.Quantity));*/
 
             return tempStore; // initialized domain model store
 
@@ -138,7 +164,7 @@ namespace Restaurant.DataAccess
 
             foreach (var inventory in data_stores.Inventorys)
             {
-                tempStore.ProductAndInventory.Add(MapProduct(inventory.Product), Convert.ToInt32(inventory.Quantity));
+                tempStore.ProductAndInventory.Add(MapProduct(inventory.Product), MapInventory(inventory));
             }
 
             //add past customers (customers who have place orders at this store before)
