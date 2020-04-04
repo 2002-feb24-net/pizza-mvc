@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Restaurant.DataAccess.Model
 {
@@ -11,6 +12,7 @@ namespace Restaurant.DataAccess.Model
         }
 
         public int CustomerId { get; set; }
+        [Display(Name = "Name:")]
         public string FullName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

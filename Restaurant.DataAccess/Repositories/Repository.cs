@@ -72,6 +72,16 @@ namespace Restaurant.DataAccess.Repositories
             _context.Set<TEntity>().RemoveRange(entities);
         }
 
+        public bool Any(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entity = Find(predicate);
+            if (entity == null)
+            {
+                return false;
+            }
+            else
+                return true;    // there is something
+        }
         public void Save()
         {
             _context.SaveChanges();

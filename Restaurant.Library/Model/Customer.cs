@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Restaurant.Interface;
 
@@ -10,6 +11,7 @@ namespace Restaurant.Domain.Model
         // implements username and password validation from User
         // have to override username methods because using Full name ("FirstName LastName")
         // otherwise methods would talk about username when user inputs full name
+        [Display(Name = "Name:")]
         public string FullName
         {
             get;
