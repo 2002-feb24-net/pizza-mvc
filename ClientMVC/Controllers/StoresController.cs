@@ -13,12 +13,12 @@ namespace ClientMVC.Controllers
 {
     public class StoresController : Controller
     {
-        
+        private readonly StoreRepository storeRepo = new StoreRepository();
 
         // GET: Stores
         public IActionResult Index()
         {
-            var storeRepo = new StoreRepository();
+            
             return View(storeRepo.GetAllDomainStores());
         }
 
@@ -30,8 +30,8 @@ namespace ClientMVC.Controllers
                 return NotFound();
             }
 
-            var storeRepo = new StoreRepository();
-            var store = storeRepo.GetDomainStore(Convert.ToInt32(id));
+/*            var storeRepo = new StoreRepository();
+*/            var store = storeRepo.GetDomainStore(Convert.ToInt32(id));
             if (store == null)
             {
                 return NotFound();
@@ -65,7 +65,7 @@ namespace ClientMVC.Controllers
             return View(store);
         }
 
-        /*// GET: Stores/Edit/5
+        // GET: Stores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,7 +73,7 @@ namespace ClientMVC.Controllers
                 return NotFound();
             }
 
-            var stores = await _context.Stores.FindAsync(id);
+            var stores = storeRepo.Get(Convert.ToInt32(id));
             if (stores == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace ClientMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StoreId,StoreName,StreetAddress,City,State,Zipcode")] Stores stores)
+        public async Task<IActionResult> Edit(int id, [Bind("StoreId,StoreName,StreetAddress,City,State,Zipcode")] Restaurant.Domain.Model.Store stores)
         {
             if (id != stores.StoreId)
             {
@@ -97,8 +97,8 @@ namespace ClientMVC.Controllers
             {
                 try
                 {
-                    _context.Update(stores);
-                    await _context.SaveChangesAsync();
+                    storeRepo.Add(Mapper.MapStoreWithInventory(stores));
+                    /*await*/ storeRepo.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,14 +124,13 @@ namespace ClientMVC.Controllers
                 return NotFound();
             }
 
-            var stores = await _context.Stores
-                .FirstOrDefaultAsync(m => m.StoreId == id);
+            var stores = storeRepo.Find((m => m.StoreId == id)).FirstOrDefault();
             if (stores == null)
             {
                 return NotFound();
             }
 
-            return View(stores);
+            return View(Mapper.MapStoreWithInventory(stores));
         }
 
         // POST: Stores/Delete/5
@@ -139,15 +138,22 @@ namespace ClientMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var stores = await _context.Stores.FindAsync(id);
-            _context.Stores.Remove(stores);
-            await _context.SaveChangesAsync();
+            var stores = storeRepo.Get(id);
+            storeRepo.Remove(stores);
+            storeRepo.Save();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StoresExists(int id)
         {
-            return _context.Stores.Any(e => e.StoreId == id);
-        }*/
+
+            var stores = storeRepo.Find((m => m.StoreId == id));
+            if (stores == null)
+            {
+                return false;
+            }
+            else
+                return true;
+        }
     }
 }
