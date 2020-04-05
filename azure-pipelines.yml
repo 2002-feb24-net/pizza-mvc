@@ -36,6 +36,13 @@ steps:
     dotnet build
   displayName: 'dotnet build'
 
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+# Want a sonar cloud analysis even if tests fail
+
 
 - script: dotnet test --logger trx
   displayName: dotnet test
@@ -58,11 +65,9 @@ steps:
 
 
 
-- task: SonarCloudAnalyze@1
 
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+
+
 
 
 
