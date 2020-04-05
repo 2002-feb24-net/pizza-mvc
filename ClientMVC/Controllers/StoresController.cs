@@ -16,10 +16,11 @@ namespace ClientMVC.Controllers
         private readonly StoreRepository storeRepo = new StoreRepository();
 
         // GET: Stores
-        public IActionResult Index()
+        public async Task<IActionResult> Index([FromQuery]string search = "")
         {
-            
-            return View(storeRepo.GetAllDomainStores());
+            IEnumerable<Stores> stores = storeRepo.GetContains(search);
+
+            return View(stores);
         }
 
         // GET: Stores/Details/5

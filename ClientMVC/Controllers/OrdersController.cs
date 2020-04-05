@@ -17,11 +17,18 @@ namespace ClientMVC.Controllers
 
         
 
-        // GET: Orders
+       /* // GET: Orders
         public async Task<IActionResult> Index()
         {
             var listOfOrders = orderRepo.GetAllOrdersIncludeCustomerAndStore();
             return View(listOfOrders);
+        }
+*/
+        public async Task<IActionResult> Index([FromQuery]string search = "")
+        {
+            IEnumerable<Orders> orders = orderRepo.GetContains(search);
+
+            return View(orders);
         }
 
         // GET: Orders/Details/5

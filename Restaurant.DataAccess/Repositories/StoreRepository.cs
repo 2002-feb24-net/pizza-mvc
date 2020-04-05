@@ -51,6 +51,18 @@ namespace Restaurant.DataAccess.Repositories
 
         }
 
+        public IEnumerable<Stores> GetContains(string sString = null) //default null value
+        {
+            var stores = GetAll();
+
+            if (sString != null)
+            {
+                stores = stores.Where(c => c.StoreName.Contains(sString));
+            }
+
+            return stores;
+        }
+
         public List<Domain.Model.Store> GetAllDomainStores ()
         {
             var _context = new DbRestaurantContext();
