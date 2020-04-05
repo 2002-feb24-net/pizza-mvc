@@ -6,23 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.DataAccess.Model;
+using Restaurant.DataAccess.Repositories;
 
 namespace ClientMVC.Controllers
 {
     public class OrderlinesController : Controller
     {
-        private readonly DbRestaurantContext _context;
+        private readonly OrderRepository orderRepo = new OrderRepository();
+        readonly OrderlineRepository OrderlineRepo = new OrderlineRepository();
+        CustomerRepository custRepo = new CustomerRepository();
+        StoreRepository storeRepo = new StoreRepository();
 
-        public OrderlinesController(DbRestaurantContext context)
-        {
-            _context = context;
-        }
+        
 
         // GET: Orderlines
         public async Task<IActionResult> Index()
         {
-            var dbRestaurantContext = _context.Orderlines.Include(o => o.Order).Include(o => o.Product);
-            return View(await dbRestaurantContext.ToListAsync());
+            var listOrderlines = OrderlineRepo.GetAllOrderlinesIncludeAll();
+
+            return View(listOrderlines);
         }
 
         // GET: Orderlines/Details/5
@@ -33,23 +35,21 @@ namespace ClientMVC.Controllers
                 return NotFound();
             }
 
-            var orderlines = await _context.Orderlines
-                .Include(o => o.Order)
-                .Include(o => o.Product)
-                .FirstOrDefaultAsync(m => m.OrderlineId == id);
-            if (orderlines == null)
+            var orderline = OrderlineRepo.GetOrderlineIncludeAll(id);
+            if (orderline == null)
             {
                 return NotFound();
             }
 
-            return View(orderlines);
+            return View(orderline);
         }
 
         // GET: Orderlines/Create
         public IActionResult Create()
         {
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId");
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
+            var lastOrderPlaced = orderRepo.GetLastOrderPlaced();   // empty order placed in orderController create
+                                                                    // or get order in progress
+            ViewData["ProductId"] = new SelectList(storeRepo.GetProductsInStock(lastOrderPlaced.StoreId), "ProductId", "ProductName");
             return View();
         }
 
@@ -58,21 +58,35 @@ namespace ClientMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderlineId,ProductId,Quantity")] Orderlines orderlines, int orderId)
+        public async Task<IActionResult> Create([Bind("ProductId,Quantity, OrderId")] Orderlines orderlines)
         {
-            orderlines.OrderId = orderId;   // pass the order id that you want this item added to
+            var lastOrderPlaced = orderRepo.GetLastOrderPlaced();   // empty order placed in orderController create
+                                                                    // or get order in progress
+            orderlines.OrderId = lastOrderPlaced.OrderId;
             if (ModelState.IsValid)
             {
-                _context.Add(orderlines);
-                await _context.SaveChangesAsync();
+                OrderlineRepo.Add(orderlines);
+                OrderlineRepo.Save();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", orderlines.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", orderlines.ProductId);
+            ViewData["OrderId"] = new SelectList(OrderlineRepo.GetAllOrderlinesIncludeAll(), "Orderline.OrderId", "Orderline.OrderId", orderlines.OrderId);
+            ViewData["ProductId"] = new SelectList(OrderlineRepo.GetAllOrderlinesIncludeAll(), "Orderline.ProductId", "Orderline.ProductName", orderlines.ProductId);
             return View(orderlines);
         }
 
-        // GET: Orderlines/Edit/5
+        public async Task<IActionResult> RedirectToOrderDetails()
+        {
+            /*var lastOrderPlaced = orderRepo.GetLastOrderPlaced();   // empty order placed in orderController create
+                                                                    // or get order in progress   
+            
+                
+            // Orders/Details/71*/
+            string ordersController = "Orders";
+            return RedirectToAction(nameof(Index), ordersController);
+           
+        }
+
+        /*// GET: Orderlines/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,13 +94,13 @@ namespace ClientMVC.Controllers
                 return NotFound();
             }
 
-            var orderlines = await _context.Orderlines.FindAsync(id);
+            var orderlines = await OrderlineRepo.Orderlines.FindAsync(id);
             if (orderlines == null)
             {
                 return NotFound();
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", orderlines.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", orderlines.ProductId);
+            ViewData["OrderId"] = new SelectList(OrderlineRepo.Orders, "OrderId", "OrderId", orderlines.OrderId);
+            ViewData["ProductId"] = new SelectList(OrderlineRepo.Products, "ProductId", "ProductName", orderlines.ProductId);
             return View(orderlines);
         }
 
@@ -106,8 +120,8 @@ namespace ClientMVC.Controllers
             {
                 try
                 {
-                    _context.Update(orderlines);
-                    await _context.SaveChangesAsync();
+                    OrderlineRepo.Update(orderlines);
+                    await OrderlineRepo.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,8 +136,8 @@ namespace ClientMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId", orderlines.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName", orderlines.ProductId);
+            ViewData["OrderId"] = new SelectList(OrderlineRepo.Orders, "OrderId", "OrderId", orderlines.OrderId);
+            ViewData["ProductId"] = new SelectList(OrderlineRepo.Products, "ProductId", "ProductName", orderlines.ProductId);
             return View(orderlines);
         }
 
@@ -135,7 +149,7 @@ namespace ClientMVC.Controllers
                 return NotFound();
             }
 
-            var orderlines = await _context.Orderlines
+            var orderlines = await OrderlineRepo.Orderlines
                 .Include(o => o.Order)
                 .Include(o => o.Product)
                 .FirstOrDefaultAsync(m => m.OrderlineId == id);
@@ -152,15 +166,15 @@ namespace ClientMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var orderlines = await _context.Orderlines.FindAsync(id);
-            _context.Orderlines.Remove(orderlines);
-            await _context.SaveChangesAsync();
+            var orderlines = await OrderlineRepo.Orderlines.FindAsync(id);
+            OrderlineRepo.Orderlines.Remove(orderlines);
+            await OrderlineRepo.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool OrderlinesExists(int id)
         {
-            return _context.Orderlines.Any(e => e.OrderlineId == id);
-        }
+            return OrderlineRepo.Orderlines.Any(e => e.OrderlineId == id);
+        }*/
     }
 }

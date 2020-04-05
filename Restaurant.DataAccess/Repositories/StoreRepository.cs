@@ -14,7 +14,7 @@ namespace Restaurant.DataAccess.Repositories
         {
         }
 
-        public Dictionary<Inventorys, Products> GetProductsInStock(int storeId)
+        public Dictionary<Inventorys, Products> GetInventorysAndProductsInStock(int storeId)
         {
             /* using var _context = new DbRestaurantContext();
 
@@ -48,6 +48,43 @@ namespace Restaurant.DataAccess.Repositories
             }
 
             return inventorysAndProducts;
+
+        }
+
+        public IEnumerable<Products> GetProductsInStock(int storeId)
+        {
+            /* using var _context = new DbRestaurantContext();
+
+             var listOfStoresAndProducts = _context.Stores.Include(s => s.StoreId == storeId)
+                                                 .Include(i => i.Inventorys)
+                                                 .ThenInclude(p => p.Product);
+             // cannot return an iqueryable without a string so need to convert to dictionary
+             Dictionary<Inventorys, Products> storesInvAndProducts = new Dictionary<Inventorys, Products>();
+             foreach (var store in listOfStoresAndProducts)
+             {
+                 storesInvAndProducts.Add(store.Inventorys, store.Inventorys.)
+             }
+
+             return listOfProducts;*/
+
+
+            // need inventorys and then need products matching those inventory.products
+
+            using var context = new DbRestaurantContext();
+
+            /*var storeIncludingInventorys = context.Stores.Include(s => s.StoreId == storeId)
+                                                 .Include(i => i.Inventorys).FirstOrDefault();*/
+
+            var inventorys = context.Inventorys.Where(i => i.StoreId == storeId).Include(p => p.Product);
+
+            // convert to list
+            var productslist = new List<Products>();
+            foreach (var inventory in inventorys)
+            {
+                productslist.Add(inventory.Product);
+            }
+
+            return productslist;
 
         }
 

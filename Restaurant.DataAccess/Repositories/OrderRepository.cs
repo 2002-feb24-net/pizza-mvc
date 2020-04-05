@@ -37,6 +37,12 @@ namespace Restaurant.DataAccess.Repositories
                 .FirstOrDefault(m => m.OrderId == orderId);
         }
 
+        public Orders GetLastOrderPlaced()
+        {
+            var orderId = context.Orders.Max(o => o.OrderId);
+            return GetOrderWithDetails(orderId);
+        }
+
         public IEnumerable<Orders> GetContains(string sString = null) //default null value
         {
             IEnumerable<Orders> orders = GetAllOrdersIncludeAll();
