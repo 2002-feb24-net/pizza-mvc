@@ -1,0 +1,66 @@
+﻿@model Restaurant.DataAccess.Model.Orders
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Orders</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TimeOrdered)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TimeOrdered)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Store)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Store.StoreName)
+        </dd>
+
+        @foreach (var orderline in Model.Orderlines)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => orderline.Product)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => orderline.Product.ProductName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => orderline.Product.Cost)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => orderline.Product.Cost)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => orderline.Quantity)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => orderline.Quantity)
+            </dd>
+
+
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.OrderId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

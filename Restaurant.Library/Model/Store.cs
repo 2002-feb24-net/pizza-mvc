@@ -1,17 +1,20 @@
 ﻿using Restaurant.Interface;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Restaurant.Domain.Model
 {
     public class Store : IDataStore
     {
+        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
         public int StoreId { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Zipcode { get; set; }
+        [Display(Name = "Name")]
         public string StoreName { get; set; }
 
 

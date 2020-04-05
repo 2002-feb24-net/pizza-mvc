@@ -12,7 +12,7 @@ namespace Restaurant.DataAccess.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext _context = new DbRestaurantContext();
+        protected DbContext _context = new DbRestaurantContext();
 /*        protected readonly ILogger<Repository> _logger;
 */
         public Repository()
@@ -55,6 +55,38 @@ namespace Restaurant.DataAccess.Repositories
         }
 
         
+
+
+        /* public IEnumerable<TEntity> Include(TEntity predicate)
+         {
+             return _context.Set<TEntity>().Include("predicate");
+         }*/
+
+        /* public object Include(Func<object, object> p)
+         {
+             return _context.Set<TEntity>().Include(p => p.);
+         }*/
+
+        /*public IQueryable<T> Include<T>(params Expression<Func<T, object>>[] includes)
+    where T : class
+        {
+            if (includes != null)
+            {
+                _context = includes.Aggregate(_context,
+                          (current, include) => current.Include(include));
+            }
+
+            return _context;
+        }*/
+
+
+        /* public IEnumerable<TEntity> Include(Expression<Func<TEntity>> predicate1, Expression<Func<TEntity>> predicate2)
+         {
+             return _context.Set<TEntity>().Include(predicate1).Include(predicate2);
+         }*/
+
+
+
 
 
         public IEnumerable<TEntity> GetAll()

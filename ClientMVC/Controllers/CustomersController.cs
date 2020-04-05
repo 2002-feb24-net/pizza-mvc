@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClientMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +18,11 @@ namespace ClientMVC.Controllers
         
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery]string search = "")
         {
-            return View(custRepo.GetAll());
+            IEnumerable<Customers> customers = custRepo.GetContains(search);
+            
+            return View(customers);
         }
 
         // GET: Customers/Details/5

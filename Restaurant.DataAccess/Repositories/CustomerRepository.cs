@@ -41,6 +41,18 @@ namespace Restaurant.DataAccess.Repositories
 
         }
 
+        public IEnumerable<Customers> GetContains(string sString = null) //default null value
+        {
+            var customers = GetAll();
+
+            if (sString != null)
+            {
+                customers = customers.Where(c => c.FullName.Contains(sString));
+            }
+
+            return customers;
+        }
+
         /*public List<Customers> LoadCustomersByName(string fullName)
         {
             using DbRestaurantContext context = new DbRestaurantContext();

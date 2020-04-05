@@ -5,6 +5,14 @@
 
 <h1>Index</h1>
 
+<div>
+    <form asp-action="Index" method="GET" class="form-inline">
+        <label class="sr-only" for="search">Search:</label>
+        <input type="search" class="form-control mb-2 mr-sm-2 mb-sm-0" id="search" name="search" placeholder="Search" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>

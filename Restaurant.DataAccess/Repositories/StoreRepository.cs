@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Restaurant.DataAccess.Model;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,43 @@ namespace Restaurant.DataAccess.Repositories
     {
         public StoreRepository()
         {
+        }
+
+        public Dictionary<Inventorys, Products> GetProductsInStock(int storeId)
+        {
+            /* using var _context = new DbRestaurantContext();
+
+             var listOfStoresAndProducts = _context.Stores.Include(s => s.StoreId == storeId)
+                                                 .Include(i => i.Inventorys)
+                                                 .ThenInclude(p => p.Product);
+             // cannot return an iqueryable without a string so need to convert to dictionary
+             Dictionary<Inventorys, Products> storesInvAndProducts = new Dictionary<Inventorys, Products>();
+             foreach (var store in listOfStoresAndProducts)
+             {
+                 storesInvAndProducts.Add(store.Inventorys, store.Inventorys.)
+             }
+
+             return listOfProducts;*/
+
+
+            // need inventorys and then need products matching those inventory.products
+
+            using var context = new DbRestaurantContext();
+
+            var storeIncludingInventorys = context.Stores.Include(s => s.StoreId == storeId)
+                                                 .Include(i => i.Inventorys).FirstOrDefault();
+
+            var inventorys = context.Inventorys.Where(i => i.StoreId == storeId).Include(p => p.Product);
+
+            // convert to dictionary
+            var inventorysAndProducts = new Dictionary<Inventorys, Products>();
+            foreach (var inventory in inventorys)
+            {
+                inventorysAndProducts.Add(inventory, inventory.Product);
+            }
+
+            return inventorysAndProducts;
+
         }
 
         public List<Domain.Model.Store> GetAllDomainStores ()
