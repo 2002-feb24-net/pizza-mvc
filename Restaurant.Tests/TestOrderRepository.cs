@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Restaurant.Tests
 {
-    public class TestOrderRepository
+    /*public class TestOrderRepository
     {
         [Fact]
         public void QueryCustomersFindById()
@@ -21,5 +21,5 @@ namespace Restaurant.Tests
                 Console.WriteLine(item);
             }
         }
-    }
+    }*/
 }
