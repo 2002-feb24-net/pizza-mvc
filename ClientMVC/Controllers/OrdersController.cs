@@ -33,7 +33,7 @@ namespace ClientMVC.Controllers
         }
 
         // GET: Orders/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id /*[FromQuery]int lastOrderID = 0*/)
         {
             if (id == null)
             {
@@ -41,6 +41,19 @@ namespace ClientMVC.Controllers
             }
 
             var order = orderRepo.GetOrderWithDetails(Convert.ToInt32(id));
+
+            // or query
+
+           /* if (lastOrderID == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                order = orderRepo.GetOrderWithDetails(lastOrderID); // query result
+            }*/
+
+
             if (order == null)
             {
                 return NotFound();

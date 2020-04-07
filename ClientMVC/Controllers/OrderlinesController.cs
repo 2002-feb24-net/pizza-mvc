@@ -67,7 +67,7 @@ namespace ClientMVC.Controllers
             {
                 OrderlineRepo.Add(orderlines);
                 OrderlineRepo.Save();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create)); // Continue adding to cart
             }
             ViewData["OrderId"] = new SelectList(OrderlineRepo.GetAllOrderlinesIncludeAll(), "Orderline.OrderId", "Orderline.OrderId", orderlines.OrderId);
             ViewData["ProductId"] = new SelectList(OrderlineRepo.GetAllOrderlinesIncludeAll(), "Orderline.ProductId", "Orderline.ProductName", orderlines.ProductId);
@@ -77,12 +77,12 @@ namespace ClientMVC.Controllers
         public async Task<IActionResult> RedirectToOrderDetails()
         {
             /*var lastOrderPlaced = orderRepo.GetLastOrderPlaced();   // empty order placed in orderController create
-                                                                    // or get order in progress   
-            
-                
-            // Orders/Details/71*/
+                                                                    // or get order in progress  */ 
+
+
+            // Orders/Details/71
             string ordersController = "Orders";
-            return RedirectToAction(nameof(Index), ordersController);
+            return RedirectToAction(nameof(Index), ordersController) ;
            
         }
 
