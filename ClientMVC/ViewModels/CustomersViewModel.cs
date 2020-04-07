@@ -11,14 +11,18 @@ namespace ClientMVC.ViewModels
             Orders = new HashSet<OrdersViewModel>();
         }
 
+        [Display(Name = "Customer ID")]
         public int CustomerId { get; set; }
         [Display(Name = "Name")]
-        [Required]
+        [DataType(DataType.Text)]
         public string FullName { get; set; }
-
         [Required]
+        [DataType(DataType.Text)]
+
         public string Username { get; set; }
         [Required]
+        [DataType(DataType.Password)]
+
         public string Password { get; set; }
 
         public virtual ICollection<OrdersViewModel> Orders { get; set; }

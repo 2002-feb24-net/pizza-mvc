@@ -147,7 +147,7 @@ namespace ClientMVC.Controllers
             return View(orders);
         }
 
-        /*// POST: Orders/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -163,8 +163,8 @@ namespace ClientMVC.Controllers
             {
                 try
                 {
-                    orderRepo.Update(orders);
-                    await orderRepo.SaveChangesAsync();
+                    orderRepo.Add(orders); // will update (add to the same order id and replace)
+                    orderRepo.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -179,8 +179,8 @@ namespace ClientMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(orderRepo.Customers, "CustomerId", "FullName", orders.CustomerId);
-            ViewData["StoreId"] = new SelectList(orderRepo.Stores, "StoreId", "StoreName", orders.StoreId);
+            ViewData["CustomerId"] = new SelectList(orderRepo.GetAllOrdersIncludeCustomerAndStore(), "CustomerId", "FullName", orders.CustomerId);
+            ViewData["StoreId"] = new SelectList(orderRepo.GetAllOrdersIncludeCustomerAndStore(), "StoreId", "StoreName", orders.StoreId);
             return View(orders);
         }
 
@@ -192,10 +192,7 @@ namespace ClientMVC.Controllers
                 return NotFound();
             }
 
-            var orders = await orderRepo.Orders
-                .Include(o => o.Customer)
-                .Include(o => o.Store)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+            var orders = orderRepo.GetOrderWithDetails(Convert.ToInt32(id));    // nullable
             if (orders == null)
             {
                 return NotFound();
@@ -209,15 +206,15 @@ namespace ClientMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var orders = await orderRepo.Orders.FindAsync(id);
-            orderRepo.Orders.Remove(orders);
-            await orderRepo.SaveChangesAsync();
+            var orders = orderRepo.GetOrderWithDetails(id);
+            orderRepo.Remove(orders);
+            orderRepo.Save();
             return RedirectToAction(nameof(Index));
         }
 
         private bool OrdersExists(int id)
         {
-            return orderRepo.Orders.Any(e => e.OrderId == id);
-        }*/
+            return orderRepo.Any(e => e.OrderId == id);
+        }
     }
 }

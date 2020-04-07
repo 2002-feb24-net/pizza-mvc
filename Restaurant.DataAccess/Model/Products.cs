@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Restaurant.DataAccess.Model
 {
@@ -12,7 +13,12 @@ namespace Restaurant.DataAccess.Model
         }
 
         public int ProductId { get; set; }
+
+        [Required]
+        [Display(Name = "Product")]
         public string ProductName { get; set; }
+        [DataType(DataType.Currency)]
+        [Required]
         public decimal? Cost { get; set; }
 
         public virtual ICollection<Inventorys> Inventorys { get; set; }

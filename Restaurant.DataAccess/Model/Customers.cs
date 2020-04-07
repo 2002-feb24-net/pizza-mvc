@@ -11,10 +11,18 @@ namespace Restaurant.DataAccess.Model
             Orders = new HashSet<Orders>();
         }
 
+        [Display (Name = "Customer ID")]
         public int CustomerId { get; set; }
-        [Display(Name = "Name:")]
+        [Display(Name = "Name")]
+        [DataType(DataType.Text)]
         public string FullName { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+
         public string Username { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+
         public string Password { get; set; }
 
         public virtual ICollection<Orders> Orders { get; set; }
